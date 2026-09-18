@@ -1,7 +1,5 @@
 import streamlit as st
 import os
-
-from dotenv import load_dotenv
 from pypdf import PdfReader
 
 import chromadb
@@ -14,10 +12,10 @@ import google.generativeai as genai
 # 1. LOAD ENVIRONMENT VARIABLES
 # --------------------------------------------------
 
-load_dotenv()
-
 api_key = os.getenv("GEMINI_API_KEY")
 
+if not api_key:
+    api_key = st.secrets["GEMINI_API_KEY"]
 if not api_key:
     st.error("Gemini API key is missing. Please check your .env file.")
     st.stop()

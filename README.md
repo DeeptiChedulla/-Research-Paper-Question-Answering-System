@@ -51,7 +51,7 @@ Provide retrieved document content as context to the Gemini language model.
 Display the page numbers from which relevant information was retrieved.
 5.9 Reduce Unsupported Answers
 Instruct the language model to answer only using the retrieved context and return a suitable message when the answer cannot be found
-SCOPE OF THE PROJECT
+# SCOPE OF THE PROJECT
 The system is designed to answer questions related to an uploaded research paper.
 The current system supports:
 •	PDF upload

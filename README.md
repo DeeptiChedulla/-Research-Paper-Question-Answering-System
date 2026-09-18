@@ -2,13 +2,13 @@
 The system uses a RAG architecture. The PDF is processed using PyPDF, divided into chunks, and converted into embeddings using Sentence Transformers. ChromaDB stores the embeddings. User questions are semantically matched with relevant chunks, which are sent to Gemini for context-grounded answers with source page numbers.
 RESEARCH PAPER QUESTION ANSWERING SYSTEM USING RAG
 
-ABSTRACT:
+# ABSTRACT:
 Research papers contain a large amount of technical an scientific information, making it difficult for users to quickly find specific information from lengthy documents. Reading an entire research paper to identify its objective, methodology, findings, datasets, or limitations can be time-consuming.
 The Research Paper Question Answering System is a Generative AI-based application that allows users to upload a research paper in PDF format and ask questions about its contents. The system uses Retrieval-Augmented Generation (RAG) to retrieve relevant information from the uploaded document before generating an answer.
 The system first extracts text from the uploaded PDF using PyPDF. The extracted text is divided into smaller sections called chunks. These chunks are converted into numerical vector representations called embeddings using the Sentence Transformers model. The embeddings are stored in ChromaDB, which acts as the vector database.
 When a user asks a question, the question is also converted into an embedding. The system performs semantic similarity search in ChromaDB to retrieve the most relevant text chunks. These retrieved chunks are provided as context to the Google Gemini language model. Gemini generates an answer based only on the retrieved context.
 The system also displays the source page numbers from which the relevant information was retrieved. This helps improve transparency and reduces the possibility of unsupported answers.
-INTRODUCTION
+# INTRODUCTION
 Research papers are an important source of knowledge in academic and scientific fields. However, research papers can be lengthy and contain complex information. Students, researchers, and professionals may need to search through many pages to find answers to specific questions.
 Traditional document searching generally depends on keywords. For example, if a user searches for a particular word, the system looks for matching words in the document. This approach may fail when the question and the document use different words with similar meanings.
 Generative AI and Large Language Models can understand natural language questions, but directly asking an LLM about an uploaded document may result in unsupported or hallucinated information if the model does not have access to the document's actual content.
@@ -16,7 +16,7 @@ To address this problem, the proposed system uses Retrieval-Augmented Generation
 RAG combines information retrieval with a Large Language Model. Instead of asking the LLM to answer using only its internal knowledge, the system first retrieves relevant information from the uploaded research paper. The retrieved information is then provided to the LLM as context.
 The basic workflow is:
 PDF → Text Extraction → Text Chunking → Embeddings → Vector Database → Semantic Retrieval → Gemini → Answer
-PROBLEM STATEMENT
+# PROBLEM STATEMENT
 Reading and analyzing lengthy research papers manually can require significant time and effort. Users may want quick answers to questions such as:
 •	What is the main objective of the research?
 •	What methodology was used?
@@ -31,7 +31,7 @@ Therefore, there is a need for a system that can:
 4.	Generate answers using the retrieved content.
 5.	Avoid using unrelated external knowledge.
 6.	Provide source page information for the answer.
-OBJECTIVES
+# OBJECTIVES
 The main objectives of the project are:
 5.1 PDF Upload
 Allow users to upload research papers in PDF format.
@@ -71,10 +71,10 @@ The system can be useful for:
 •	Research assistants
 •	Project teams
 •	People reviewing technical papers
-SYSTEM ARCHITECTURE
+# SYSTEM ARCHITECTURE
 The architecture of the system can be represented as:
  
-10. TECHNOLOGIES USED
+# 10. TECHNOLOGIES USED
 10.1 Python
 Python is used as the primary programming language.
 It provides libraries for:
@@ -135,7 +135,7 @@ Example:
 GEMINI_API_KEY=YOUR_API_KEY
 This avoids placing the API key directly inside the Python source code.
 ________________________________________
-11. SYSTEM REQUIREMENTS
+# 11. SYSTEM REQUIREMENTS
 11.1 Hardware Requirements
 Minimum requirements:
 •	Processor: Intel Core i3 or equivalent
@@ -154,7 +154,7 @@ ________________________________________
 •	Internet browser
 •	Gemini API key
 ________________________________________
-12. PROJECT STRUCTURE
+# 12. PROJECT STRUCTURE
 The project has the following basic structure:
 Research-Paper-QA/
  ── app.py
@@ -166,7 +166,7 @@ Stores the Gemini API key.
 venv/
 Contains the project's Python virtual environment.
 ________________________________________
-13. REQUIREMENTS
+# 13. REQUIREMENTS
 The main dependencies are:
 streamlit
 pypdf
@@ -176,14 +176,14 @@ google-generativeai
 python-dotenv
 These libraries provide the main functionality required for the application.
 ________________________________________
-14. METHODOLOGY
+# 14. METHODOLOGY
 The methodology consists of two major phases:
 Phase 1 – Document Processing
 The research paper is processed and stored in the vector database.
 Phase 2 – Question Answering
 The user's question is converted into an embedding, relevant information is retrieved, and Gemini generates the answer.
 ________________________________________
-15. DOCUMENT PROCESSING PIPELINE
+# 15. DOCUMENT PROCESSING PIPELINE
 Step 1: Upload PDF
 The user uploads a research paper using the Streamlit file uploader.
 uploaded_file = st.file_uploader(
@@ -205,7 +205,7 @@ Page 1 → Extracted text
 Page 2 → Extracted text
 Page 3 → Extracted text
 ________________________________________
-16. TEXT CHUNKING
+# 16. TEXT CHUNKING
 Large documents cannot always be processed as one large piece of text.
 Therefore, the extracted text is divided into smaller sections called chunks.
 The application uses:
@@ -228,7 +228,7 @@ Chunking helps:
 •	Retrieve only relevant portions.
 •	Provide focused context to the LLM.
 ________________________________________
-17. EMBEDDINGS
+# 17. EMBEDDINGS
 After chunking, each text chunk is converted into an embedding.
 The project uses:
 all-MiniLM-L6-v2
@@ -242,7 +242,7 @@ Embedding Model
 Numerical Vector
 The numerical vectors allow the system to compare the semantic similarity between text chunks and questions.
 ________________________________________
-18. VECTOR DATABASE
+# 18. VECTOR DATABASE
 The generated embeddings are stored in ChromaDB.
 The system creates a collection:
 collection = client.get_or_create_collection(
@@ -274,7 +274,7 @@ results = collection.query(
 )
 Therefore, instead of searching only for exact words, the system searches for text that is semantically related to the question.
 ________________________________________
-20. CONTEXT CREATION
+# 20. CONTEXT CREATION
 The retrieved chunks are combined into a context.
 The context contains:
 Page number
@@ -288,7 +288,7 @@ Page: 7
 The experimental results show...
 This context is then passed to Gemini.
 ________________________________________
-21. PROMPT ENGINEERING
+# 21. PROMPT ENGINEERING
 The system uses a prompt that instructs Gemini to answer only using the retrieved context.
 The main instructions are:
 Answer the user's question ONLY using the
@@ -299,7 +299,7 @@ If the answer is not available, the system instructs the model to return:
 The answer could not be found in the uploaded research paper.
 This is an important part of the RAG design because it helps keep the answer grounded in the uploaded document.
 ________________________________________
-22. GENERATION USING GEMINI
+# 22. GENERATION USING GEMINI
 The retrieved context and user question are sent to the Gemini model.
 The basic process is:
 Retrieved Context
@@ -311,7 +311,7 @@ User Question
 Generated Answer
 The generated answer is displayed in the Streamlit interface.
 ________________________________________
-23. SOURCE PAGE IDENTIFICATION
+# 23. SOURCE PAGE IDENTIFICATION
 The system stores page information as metadata.
 Example:
 metadatas.append(
@@ -351,7 +351,7 @@ Displays the generated answer.
 Sources Section
 Displays the relevant source page numbers.
 ________________________________________
-25. APPLICATION WORKFLOW
+# 25. APPLICATION WORKFLOW
 The complete workflow is:
 Step 1
 User opens the application.
@@ -384,7 +384,7 @@ The answer is displayed to the user.
 Step 15
 Relevant source page numbers are displayed.
 ________________________________________
-26. RAG ARCHITECTURE
+# 26. RAG ARCHITECTURE
 RAG stands for:
 Retrieval-Augmented Generation
 It consists of two main components:
@@ -403,7 +403,7 @@ is used for generation.
 Therefore:
 RAG = Retrieval + Generation
 ________________________________________
-27. WHY RAG IS USED
+# 27. WHY RAG IS USED
 A direct LLM approach would be:
 Question → LLM → Answer
 The LLM may not have the actual content of the uploaded research paper available as context.
@@ -417,7 +417,7 @@ Provide retrieved content to LLM
 Generate answer
 This makes the answer more closely connected to the uploaded document.
 ________________________________________
-28. DIFFERENCE BETWEEN KEYWORD SEARCH AND SEMANTIC SEARCH
+# 28. DIFFERENCE BETWEEN KEYWORD SEARCH AND SEMANTIC SEARCH
 Keyword Search
 Keyword search looks for matching words.
 Example:
@@ -439,7 +439,7 @@ CIFAR-10 image collection."
 Even though the exact question wording may not appear in the document, the relevant meaning can be retrieved.
 The project uses embeddings and ChromaDB for semantic retrieval.
 ________________________________________
-29. HALLUCINATION REDUCTION
+# 29. HALLUCINATION REDUCTION
 A major challenge with Generative AI systems is hallucination.
 Hallucination occurs when an AI model generates information that is not supported by the available information.
 The project attempts to reduce this problem through:
@@ -450,7 +450,7 @@ The project attempts to reduce this problem through:
 5.	Displaying source page numbers.
 The system does not guarantee that hallucinations are impossible, but these mechanisms help ground the response in the uploaded document.
 ________________________________________
-30. SECURITY CONSIDERATIONS
+# 30. SECURITY CONSIDERATIONS
 The Gemini API key is stored in the .env file rather than directly inside the source code.
 Example:
 GEMINI_API_KEY=YOUR_API_KEY
@@ -464,13 +464,13 @@ A .gitignore file should include:
 venv/
 __pycache__/
 ________________________________________
-31. ERROR HANDLING
+# 31. ERROR HANDLING
 The application checks whether the Gemini API key exists.
 If the key is missing, the application displays:
 Gemini API key is missing. Please check your .env file.
 The system also handles cases where ChromaDB may not have an existing collection state by using a safe deletion operation.
 ________________________________________
-32. TESTING
+# 32. TESTING
 Testing is performed to verify whether the system works correctly for different inputs.
 Test Case 1: Valid PDF Upload
 Input: Valid research paper PDF
@@ -518,7 +518,7 @@ Expected Result:
 Relevant source page numbers should be displayed.
 Result: Pass
 ________________________________________
-33. SAMPLE INPUT AND OUTPUT
+# 33. SAMPLE INPUT AND OUTPUT
 Sample Input
 User uploads:
 research_paper.pdf
@@ -551,7 +551,7 @@ Page 2
 Page 3
 The exact answer depends on the uploaded research paper.
 ________________________________________
-34. ADVANTAGES
+# 34. ADVANTAGES
 The system provides several advantages:
 1.	Reduces the time required to manually search research papers.
 2.	Allows natural-language questions.
@@ -564,7 +564,7 @@ The system provides several advantages:
 9.	Uses RAG to ground responses in retrieved document content.
 10.	Can be extended with additional features in the future.
 ________________________________________
-35. LIMITATIONS
+# 35. LIMITATIONS
 The current implementation has some limitations:
 1.	It primarily supports PDF documents.
 2.	Text extraction depends on the structure of the PDF.
@@ -577,7 +577,7 @@ The current implementation has some limitations:
 9.	The current retrieval configuration uses the top 5 retrieved chunks.
 10.	The current interface does not provide advanced document management features.
 ________________________________________
-36. FUTURE ENHANCEMENTS
+# 36. FUTURE ENHANCEMENTS
 The project can be enhanced in several ways.
 36.1 Multiple Research Papers
 Allow users to upload multiple research papers and ask questions across all documents.
@@ -619,7 +619,7 @@ The system could generate visual summaries such as:
 •	Dataset statistics
 •	Research trend charts
 ________________________________________
-37. EXPECTED OUTCOME
+# 37. EXPECTED OUTCOME
 The expected outcome of the project is a functional web-based research paper question-answering application.
 The application should allow a user to:
 1.	Upload a research paper.
@@ -630,7 +630,7 @@ The application should allow a user to:
 6.	View source page numbers.
 The system demonstrates how Retrieval-Augmented Generation can be applied to academic document question answering.
 ________________________________________
-38. CONCLUSION
+# 38. CONCLUSION
 The Research Paper Question Answering System Using RAG provides an efficient way to interact with research papers using natural language.
 The system combines PDF text extraction, text chunking, semantic embeddings, vector search, and Generative AI.
 The research paper is first converted into manageable text chunks. These chunks are transformed into embeddings and stored in ChromaDB. When the user asks a question, the system retrieves the most relevant chunks based on semantic similarity. These chunks are then provided as context to Gemini, which generates a natural-language answer.
